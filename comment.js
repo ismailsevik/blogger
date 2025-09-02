@@ -1,4 +1,7 @@
-        document.addEventListener('DOMContentLoaded', function() {
+<script type="text/javascript">
+//<![CDATA[
+
+document.addEventListener('DOMContentLoaded', function() {
   // YouTube video kimliğini çıkarmak için regex ifadeleri
   var youtubeRegex = /(?:https?:\/\/)?(?:www\.)?(?:m\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|playlist\?list=))([\w-]{11})(?:&.*)?$/i;
   var shortsRegex = /(?:https?:\/\/)?(?:www\.)?(?:m\.)?(?:youtube\.com\/shorts\/)([\w-]{11})(?:.*)?$/i;
@@ -31,19 +34,19 @@
           const iframeWidth = isShorts ? 379 : 560;
           const iframeHeight = isShorts ? 674 : 280;
           return `<iframe width="${iframeWidth}" height="${iframeHeight}" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
-        } 
-        
+        }
+
         // Eğer resim linkiyse <img> etiketi oluştur
         else if (/\.(jpeg|jpg|gif|png|webp|avif)$/i.test(url)) {
           return `<img class="lazy" data-src="${url}" src="${url}" alt="Resim" />`;
-        } 
-        
+        }
+
         // Hiçbiri değilse, orijinal içeriği döndür
         else {
           return match;
         }
       });
-      
+
       comment.innerHTML = content;
     });
   }
@@ -73,3 +76,6 @@
     });
   }
 });
+
+//]]>
+</script>
