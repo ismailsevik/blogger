@@ -1,0 +1,136 @@
+/* ------ Blogger Comment  Form ------ */
+#comments {
+font-family:Arial, sans-serif;
+margin-left:15px;
+}
+#comments ol {
+list-style-type:none;
+padding:0;
+margin:0;
+font-size:14px;
+}
+#comments h4#comment-post-message {
+  font-weight: normal;
+  font-style: italic;
+  margin-bottom: 15px;
+  text-align: center;  
+  display: none;
+}
+#comments .comment-title, #comments .comment-title .title {
+color:#333;
+font-size:19px;
+}
+
+/* ----- Comments ----- */
+.comment-thread .comment {
+  position: relative;
+  margin-bottom: 30px;
+  padding-left: 40px;
+  border-bottom: 1px solid #ccc;
+}
+.comment-thread .comment:last-child {
+  border: 0;
+}
+
+/* ----- Avatar ----- */
+.comment-thread .avatar-image-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 30px;
+  height: 30px;
+  border-radius: 100%;
+  overflow: hidden;
+  background-color: #F1F5f9;
+}
+.avatar-image-container img {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  z-index: 2;
+}
+.avatar-image-container span {
+  position: absolute;
+  z-index: 1;
+  top 0;
+  left: 0;
+  width: 40px;
+  line-height: 40px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 18px;
+  color: #aaa;
+}
+
+/* ----- Comment Header ----- */
+.comments .comment-header {
+  display: flex;
+  align-items: baseline;
+  font-size: unset;
+}
+.comments .comment-header .icon.user {
+  display: none
+}
+.comments .comment-header .user {
+  margin-right: 15px;
+  font-style: normal;
+  display: block;
+  font-weight: bold;
+  font-size:14px;
+}
+.comments .comment-header .user a {
+  text-decoration: none;
+  color:#799EFF;
+}
+.comment-header .datetime a {
+  font-size: 0.75em;
+  text-decoration: none;
+  color: #333;
+}
+
+/* ----- Comment action ----- */
+.comments .comment-actions {
+  display: inline-block;
+  font-size: unset;
+  font-weight: normal;
+}
+.comments .comment-replies .comment-actions {
+  display: none;
+}
+.comments .comment-actions a {
+  padding-bottom: 3px;
+  text-decoration: none;
+  margin-right: 15px;
+  font-weight: 500;
+  font-size: .82em;
+  color:#799EFF;
+}
+.comments .comment-actions .item-control {
+  display: none;
+}
+.comments .comment-actions a:hover {
+  opacity: 1;
+}
+.loadmore {
+  display: none;
+}
+.loadmore.loaded a {
+  display: inline-block;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  text-decoration: none;
+  margin-top: 15px;
+}
+.comments .continue {
+  display: none !important;
+}
+
+/* ----- Reply -----*/
+.comments .comment-replies {
+  padding-top: 30px
+}
+.comments .comment-replies .comment-replies {
+  display: none;
+}
+.thread-expanded .thread-count a {
+  display: none;
+}
