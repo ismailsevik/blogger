@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mobil Paylaşım Menüsü</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    :root {
+      --ios-blue: #007AFF;
+      --ios-gray: #EFEFF4;
+      --icon-size: 56px;
+      --text-color: #4A4A4A;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: #f4f4f7;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      position: relative;
+    }
+
+    /* Ana "Paylaş" butonu */
+    .open-share-btn {
+      padding: 12px 24px;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--ios-blue);
+      background-color: #ffffff;
+      border: 1px solid #d3d3d3;
+      border-radius: 12px;
+      cursor: pointer;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      transition: background-color 0.2s ease, transform 0.2s ease;
+    }
+
+    .open-share-btn:hover {
+      background-color: #f0f0f0;
+    }
+    .open-share-btn:active {
+      transform: scale(0.98);
+    }
+
+    /* Paylaşım menüsü overlay */
+    .share-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(5px);
+      z-index: 100;
+      display: none;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .share-overlay.active {
+      display: block;
+      opacity: 1;
+    }
+
+    /* Paylaşım menüsü modali */
+    .share-sheet {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background-color: #ffffff;
+      border-top-left-radius: 20px;
+      border-top-right-radius: 20px;
+      z-index: 101;
+      padding: 20px 0 10px;
+      transform: translateY(100%);
+      transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    .share-sheet.active {
+      transform: translateY(0);
+    }
+
+    .share-handle {
+      width: 40px;
+      height: 5px;
+      background-color: #dcdcdc;
+      border-radius: 2.5px;
+      margin: 0 auto 15px;
+    }
+
+    /* Paylaşım seçenekleri konteyneri */
+    .share-options-container {
+      display: flex;
+      justify-content: space-around;
+      padding: 0 15px;
+    }
+
+    /* Her bir paylaşım seçeneği (ikon + metin) */
+    .share-option {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      text-align: center;
+      flex: 1;
+    }
+
+    .share-option .icon-wrapper {
+      width: var(--icon-size);
+      height: var(--icon-size);
+      border-radius: 18px; /* iOS uygulamalarında yuvarlak kare */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+      font-size: 24px;
+      transition: transform 0.2s ease;
+    }
+
+    .share-option .icon-wrapper:active {
+      transform: scale(0.9);
+    }
+
+    .share-option .label {
+      font-size: 13px;
+      color: var(--text-color);
+    }
+
+    .share-option .facebook { background-color: #1877f2; }
+    .share-option .twitter { background-color: #1da1f2; }
+    .share-option .whatsapp { background-color: #25d366; }
+    .share-option .email { background-color: #4a4a4a; }
+    .share-option .copy-link { background-color: var(--ios-gray); color: #000;}
+
+    /* İptal butonu */
+    .cancel-btn {
+      width: calc(100% - 40px);
+      margin: 20px auto 0;
+      padding: 15px;
+      background-color: var(--ios-gray);
+      border: none;
+      border-radius: 12px;
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--ios-blue);
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+    
+    .cancel-btn:active {
+        background-color: #dcdcdc;
+    }
+
+  </style>
+</head>
+<body>
+
+  <button class="open-share-btn" onclick="openShareSheet()">Paylaş</button>
+
+  <div class="share-overlay" onclick="closeShareSheet()">
+    <div class="share-sheet" onclick="event.stopPropagation()">
+      <div class="share-handle"></div>
+
+      <div class="share-options-container">
+        <div class="share-option" onclick="share('facebook'); closeShareSheet();">
+          <div class="icon-wrapper facebook">
+            <i class="fab fa-facebook-f"></i>
+          </div>
+          <span class="label">Facebook</span>
+        </div>
+
+        <div class="share-option" onclick="share('twitter'); closeShareSheet();">
+          <div class="icon-wrapper twitter">
+            <i class="fab fa-twitter"></i>
+          </div>
+          <span class="label">Twitter</span>
+        </div>
+
+        <div class="share-option" onclick="share('whatsapp'); closeShareSheet();">
+          <div class="icon-wrapper whatsapp">
+            <i class="fab fa-whatsapp"></i>
+          </div>
+          <span class="label">WhatsApp</span>
+        </div>
+
+        <div class="share-option" onclick="share('email'); closeShareSheet();">
+          <div class="icon-wrapper email">
+            <i class="fas fa-envelope"></i>
+          </div>
+          <span class="label">E-posta</span>
+        </div>
+
+        <div class="share-option" onclick="copyLink(); closeShareSheet();">
+          <div class="icon-wrapper copy-link">
+            <i class="fas fa-link"></i>
+          </div>
+          <span class="label">Kopyala</span>
+        </div>
+      </div>
+      
+      <button class="cancel-btn" onclick="closeShareSheet()">İptal</button>
+    </div>
+  </div>
+
+  <script>
+    const shareOverlay = document.querySelector('.share-overlay');
+    const shareSheet = document.querySelector('.share-sheet');
+
+    function openShareSheet() {
+      shareOverlay.classList.add('active');
+      shareSheet.classList.add('active');
+    }
+
+    function closeShareSheet() {
+      shareOverlay.classList.remove('active');
+      shareSheet.classList.remove('active');
+    }
+
+    const getPageUrl = () => window.location.href;
+
+    function share(platform) {
+      const url = getPageUrl();
+      const title = document.title;
+      let shareUrl = '';
+
+      switch (platform) {
+        case 'facebook':
+          shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
+          break;
+        case 'twitter':
+          shareUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`;
+          break;
+        case 'whatsapp':
+          shareUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(title + " " + url)}`;
+          break;
+        case 'email':
+          shareUrl = `mailto:?subject=${encodeURIComponent(title)}&body=${encodeURIComponent("Merhaba, bu sayfayı kontrol et: " + url)}`;
+          break;
+        default:
+          return;
+      }
+      window.open(shareUrl, '_blank');
+    }
+
+    function copyLink() {
+      const url = getPageUrl();
+      navigator.clipboard.writeText(url).then(() => {
+        alert('Bağlantı kopyalandı!');
+      }).catch(err => {
+        console.error('Bağlantı kopyalanamadı: ', err);
+        alert('Bağlantı kopyalanamadı. Lütfen manuel olarak deneyin.');
+      });
+    }
+  </script>
+
+</body>
+</html>
