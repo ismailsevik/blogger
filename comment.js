@@ -1,6 +1,6 @@
 <script type="text/javascript">
 //<![CDATA[
-
+// YouTube Görsel ve Video Ekleme kodu
 document.addEventListener('DOMContentLoaded', function() {
   // YouTube video kimliğini çıkarmak için regex ifadeleri
   var youtubeRegex = /(?:https?:\/\/)?(?:www\.)?(?:m\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|playlist\?list=))([\w-]{11})(?:&.*)?$/i;
